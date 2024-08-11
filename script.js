@@ -1,9 +1,22 @@
 let gridSize;
 
+// Create a Title
+const title = document.createElement("div");
+title.textContent = `Etch-a-Sketch`;
+title.style.fontSize = "64px";
+document.body.appendChild(title);
+
 // Ask user for grid size
 const gridSizeBtn = document.createElement("button");
+gridSizeBtn.classList.add(`btn-resize`);
 gridSizeBtn.textContent = `Resize`;
 document.body.appendChild(gridSizeBtn);
+
+// Add a clear grid button
+const clearGridBtn = document.createElement("button");
+clearGridBtn.classList.add(`btn-clear`);
+clearGridBtn.textContent = `Clear`;
+document.body.appendChild(clearGridBtn);
 
 // Create containerdiv element for grid
 const container = document.createElement("div");
@@ -13,10 +26,24 @@ document.body.appendChild(container);
 // Initial grid
 createGrid(16);
 
+// Select all grid div elements
+const grid = document.querySelectorAll(".grid");
+
+// Listen for resize button click
 gridSizeBtn.addEventListener("click", (e) => {
-  gridSize = prompt("Please Enter a grid size");
+  // Ask user for gridsize
+  gridSize = prompt(`
+    Please Enter a grid size, for example:
+    Entering '10' will create a 10x10 grid
+    (Please note, it must be below 100!)`);
+
+  // check if input is larger than 100
+  if (gridSize > 100) {
+    alert(`Too Large!`);
+    return;
+  }
+
   // Remove Current grid
-  const grid = document.querySelectorAll(".grid");
   grid.forEach((element) => {
     element.remove();
   });
@@ -24,14 +51,24 @@ gridSizeBtn.addEventListener("click", (e) => {
   createGrid(gridSize);
 });
 
+// Listen for clear button click
+
+clearGridBtn.addEventListener("click", (e) => {
+  grid.forEach((element) => {
+    clearGrid(element);
+  });
+});
+
 // Change colour of element when hovering over it
 
 container.addEventListener("mouseover", (e) => {
-  console.log(e.target.className);
+  // console.log(e.target.className);
   if (e.target.className === "grid") {
     gridColour(e.target);
   }
 });
+
+// Functions
 
 // Generates a random number
 function randomColour() {
@@ -42,6 +79,12 @@ function randomColour() {
 
 function gridColour(element) {
   element.style.backgroundColor = `rgb(${randomColour()}, ${randomColour()}, ${randomColour()})`;
+}
+
+// clears the grid
+
+function clearGrid(element) {
+  element.style.backgroundColor = `white`;
 }
 
 // Creates a grid with size inputted gridSize x gridSize
