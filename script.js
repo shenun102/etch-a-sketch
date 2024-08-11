@@ -26,9 +26,6 @@ document.body.appendChild(container);
 // Initial grid
 createGrid(16);
 
-// Select all grid div elements
-const grid = document.querySelectorAll(".grid");
-
 // Listen for resize button click
 gridSizeBtn.addEventListener("click", (e) => {
   // Ask user for gridsize
@@ -43,8 +40,11 @@ gridSizeBtn.addEventListener("click", (e) => {
     return;
   }
 
+  // Select all grid div elements
+  let grid = document.querySelectorAll(".grid");
   // Remove Current grid
   grid.forEach((element) => {
+    console.log(element);
     element.remove();
   });
   // Create new grid
@@ -54,8 +54,11 @@ gridSizeBtn.addEventListener("click", (e) => {
 // Listen for clear button click
 
 clearGridBtn.addEventListener("click", (e) => {
+  // Select all grid div elements
+  let grid = document.querySelectorAll(".grid");
   grid.forEach((element) => {
     clearGrid(element);
+    console.log("clear");
   });
 });
 
